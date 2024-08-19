@@ -1,5 +1,11 @@
+'use client'
 import { CountDown } from '@/components/countdown';
+import { CountContextProvider } from '@/context/count-countext-provider';
 
 export default function Home() {
-  return <CountDown />
+  return (
+    <CountContextProvider>
+      <CountDown />
+    </CountContextProvider>
+  )
 }

@@ -4,8 +4,33 @@ import './styles.scss'
 import { useCountContext } from '@/context/count-countext-provider';
 
 
+const Test = ({ count = 0, number = 0, before = 9 }) => {
+  return (
+    <div
+      // className='card-counter'
+      className={'card-counter'
+        + (before === number ? ' before' : '')
+        // + (after === number ? ' after' : '')
+        + (count === number ? ' active' : '')
+      }
+    >
+      <div >
+        <div className='card-counter-up'>
+          <div className='card-counter-shadow'></div>
+          <div className='card-counter-inn'>{number}</div>
+        </div>
+        <div className='card-counter-down'>
+          <div className='card-counter-shadow'></div>
+          <div className='card-counter-inn'>{number}</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 export const CardCounter = () => {
+  const { count, handleChangeCount } = useCountContext()
   // function secondPlay() {
   //   const activeCard = document.querySelector(".card-counter.active");
   //   const elements = document.querySelectorAll(".card-counter")
@@ -38,54 +63,25 @@ export const CardCounter = () => {
   //   newActiveCard.classList.add("active");
   // }
 
-
-  const { count, changeCount } = useCountContext()
-
-  const before = useMemo(() => {
-    return count === 0 ? 9 : count - 1;
-  }, [count])
-
-  const refCount = useRef(0)
+  const before = count === 0 ? 9 : count - 1;
+  // const before = useMemo(() => {
+  //   return count === 0 ? 9 : count - 1;
+  // }, [count])
 
 
   useEffect(() => {
     setInterval(() => {
       // if (refCount.current === count) return
-      changeCount()
+      handleChangeCount()
     }, 1000);
-  }, [changeCount])
-
-
-  useEffect(() => {
-    refCount.current = count
-
-  }, [count])
+  }, [])
 
   return (
     <div className='card-counter-container'>
       {
         Array.from({ length: 10 }, (_, index) => index)
           .map((number) => (
-            <div
-              // className='card-counter'
-              className={'card-counter'
-                + (before === number ? ' before' : '')
-                // + (after === number ? ' after' : '')
-                + (count === number ? ' active' : '')
-              }
-              key={number}
-            >
-              <div >
-                <div className='card-counter-up'>
-                  <div className='card-counter-shadow'></div>
-                  <div className='card-counter-inn'>{number}</div>
-                </div>
-                <div className='card-counter-down'>
-                  <div className='card-counter-shadow'></div>
-                  <div className='card-counter-inn'>{number}</div>
-                </div>
-              </div>
-            </div>
+            <Test before={before} count={count} number={number} key={number} />
           ))
       }
     </div>

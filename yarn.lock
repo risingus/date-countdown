@@ -252,7 +252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20":
+"@types/node@npm:20":
   version: 20.16.1
   resolution: "@types/node@npm:20.16.1"
   dependencies:
@@ -268,7 +268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18":
+"@types/react-dom@npm:18":
   version: 18.3.0
   resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
@@ -277,7 +277,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18":
+"@types/react@npm:*, @types/react@npm:18":
   version: 18.3.3
   resolution: "@types/react@npm:18.3.3"
   dependencies:
@@ -814,14 +814,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "data-countdown@workspace:."
   dependencies:
-    "@types/node": "npm:^20"
-    "@types/react": "npm:^18"
-    "@types/react-dom": "npm:^18"
-    eslint: "npm:^8"
+    "@types/node": "npm:20"
+    "@types/react": "npm:18"
+    "@types/react-dom": "npm:18"
+    eslint: "npm:8"
     eslint-config-next: "npm:14.2.5"
     next: "npm:14.2.5"
-    react: "npm:^18"
-    react-dom: "npm:^18"
+    react: "npm:18"
+    react-dom: "npm:18"
     sass: "npm:1.77.8"
     typescript: "npm:^5"
   languageName: unknown
@@ -1344,7 +1344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8":
+"eslint@npm:8":
   version: 8.57.0
   resolution: "eslint@npm:8.57.0"
   dependencies:
@@ -2969,7 +2969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18":
+"react-dom@npm:18":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -2988,7 +2988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18":
+"react@npm:18":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:

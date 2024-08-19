@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react'
 import './styles.scss'
 import { CardCounter } from '../card-counter'
-import { CountContextProvider } from '@/context/count-countext-provider'
+import { CountContextProvider, useCountContext } from '@/context/count-countext-provider'
 
 export const CountDown = () => {
+
 
   useEffect(() => {
     setInterval(() => {
@@ -178,9 +179,7 @@ export const CountDown = () => {
         </li>
       </ul>
 
-      <CountContextProvider>
-        <CardCounter />
-      </CountContextProvider>
+      <CardCounter />
     </main>
 
   )
