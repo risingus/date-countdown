@@ -1,0 +1,185 @@
+.card-counter-container {
+  position: relative;
+  width: 60px;
+  height: 90px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .7);
+}
+
+
+.card-counter {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  
+  & > div {
+    display: block;
+    height: 100%;
+    perspective: 200px;
+    z-index: 2;
+
+    & > div {
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      overflow: hidden;
+    }
+  }
+
+}
+
+.card-counter.active {
+  animation: asd .5s .5s linear both;
+  z-index: 1;
+
+  .card-counter-down {
+    z-index: 2;
+    animation: turn .5s .5s linear both;
+
+    .card-counter-shadow {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, .1) 100%);
+      animation: hide .5s .3s linear both;
+    }
+  }
+
+  .card-counter-up {
+    .card-counter-shadow {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .1) 0%, rgba(0, 0, 0, 1) 100%);
+      animation: hide .5s .3s linear both;
+    }
+  }
+}
+
+
+.card-counter.before {
+  z-index: 3;
+
+  .card-counter-up {
+    z-index: 2;
+    animation: turn2 .5s linear both;
+
+    .card-counter-shadow {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .1) 0%, rgba(0, 0, 0, 1) 100%);
+      animation: show .5s linear both;
+    }
+  }
+
+  .card-counter-down {
+    .card-counter-shadow {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, .1) 100%);
+      animation: show .5s linear both;
+    }
+  }
+}
+
+
+.card-counter-up {
+  transform-origin: 50% 100%;
+  top: 0;
+
+  .card-counter-inn {
+    top: 0;
+  }
+
+  &::after {
+    content: "";
+    position:absolute;
+    top:44px;
+    left:0;
+    z-index: 5;
+    width: 100%;
+    height: 3px;
+    background-color: rgba(0,0,0,.4);
+  }
+}
+
+.card-counter-down {
+  transform-origin: 50% 0%;
+  bottom: 0;
+
+  .card-counter-inn {
+    bottom: 0;
+  }
+}
+
+.card-counter-inn {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 200%;
+  color: #ccc;
+  text-shadow: 0 1px 2px #000;
+  text-align: center;
+  background-color: #333;
+  border-radius: 6px;
+
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 87px;
+}
+
+
+.card-counter-shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+
+@keyframes turn2 {
+  0% {
+      transform: rotateX(0deg);
+  }
+  100% {
+      transform: rotateX(-90deg);
+  }
+}
+
+
+@keyframes show {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+  }
+}
+
+@keyframes turn {
+  0% {
+      transform: rotateX(90deg);
+  }
+  100% {
+      transform: rotateX(0deg);
+  }
+}
+
+@keyframes asd {
+  0% {
+      z-index: 2;
+  }
+  5% {
+      z-index: 4;
+  }
+  100% {
+      z-index: 4;
+  }
+}
+
