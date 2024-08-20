@@ -1,46 +1,50 @@
 @keyframes rotate {
-  from {
-    rotate: 0deg;
-  }
+	from {
+		rotate: 0deg;
+	}
 
-  50% {
-    scale: 1.25 1.5;
-  }
+	to {
+		rotate: 360deg;
+	}
+}
 
-  to {
-    rotate: 360deg;
-  }
+@keyframes scale {
+	from {
+		scale: 1
+	}
+	to {
+		scale: 1.25;
+	}
 }
 
 .blobContainer {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  position: absolute;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	position: absolute;
 
-  .blob {
-    background-color: white;
-    height: 35vmax;
-    aspect-ratio: 1;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    translate: -50% -50%;
-    border-radius: 50%;
+	.blob {
+		background-color: white;
+		height: 40vmax;
+		aspect-ratio: 1;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		translate: -50% -50%;
+		border-radius: 50%;
 
-    background: linear-gradient(to right, rgb(237, 5, 148), rgb(91, 31, 209));
-    animation: rotate 10s infinite;
-    opacity: 0.8;
-  }
+		background: linear-gradient(to right, rgb(237, 5, 148), rgb(91, 31, 209));
+		animation: rotate 8s infinite, scale 8s infinite ease-in-out alternate-reverse;
+		opacity: 0.8;
+	}
 
-  .blur {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-    backdrop-filter: blur(12vmax);
-  }
-
+	.blur {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		z-index: 1;
+		backdrop-filter: blur(10vmax);
+	}
 }

@@ -15,7 +15,6 @@
   height: var(--card-height);
   border-radius: var(--card-border-radius);
   box-shadow: 0 2px 5px rgba(0, 0, 0, .7);
-  // box-shadow: 0 2px 3px rgba(237, 5, 148, 0.5);
 }
 
 .card-counter {
@@ -41,7 +40,6 @@
       overflow: hidden;
     }
   }
-
 }
 
 .card-counter.active {

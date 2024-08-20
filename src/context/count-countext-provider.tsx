@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useCallback } from 'react';
+import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
 interface CountContextType {
   date?: Date
@@ -31,10 +31,6 @@ export const CountContextProvider = ({ children }: any) => {
     }
   });
 
-
-  function changeCount() {
-    dispatch({ type: 'changeCount' });
-  }
 
   const countProps = useMemo(
     () => ({
