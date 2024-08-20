@@ -1,7 +1,17 @@
+
+
+:root {
+  --card-height: 5.625rem;
+  --card-width: 3.75rem;
+  --card-folding-top: 2.75rem;
+  --card-font-size: 5rem;
+  --card-line-height: 5.438rem;
+}
+
 .card-counter-container {
   position: relative;
-  width: 60px;
-  height: 90px;
+  width: var(--card-width);
+  height: var(--card-height);
   border-radius: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, .7);
 }
@@ -33,7 +43,7 @@
 }
 
 .card-counter.active {
-  animation: asd .5s .5s linear both;
+  animation: changeIndex .5s .5s linear both;
   z-index: 1;
 
   .card-counter-down {
@@ -53,7 +63,6 @@
     }
   }
 }
-
 
 .card-counter.before {
   z-index: 3;
@@ -76,7 +85,6 @@
   }
 }
 
-
 .card-counter-up {
   transform-origin: 50% 100%;
   top: 0;
@@ -88,7 +96,7 @@
   &::after {
     content: "";
     position:absolute;
-    top:44px;
+    top: var(--card-folding-top);
     left:0;
     z-index: 5;
     width: 100%;
@@ -117,13 +125,11 @@
   text-align: center;
   background-color: #333;
   border-radius: 6px;
-
   font-family: "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 80px;
   font-weight: bold;
-  line-height: 87px;
+  font-size: var(--card-font-size);
+  line-height: var(--card-line-height);
 }
-
 
 .card-counter-shadow {
   position: absolute;
@@ -131,7 +137,6 @@
   height: 100%;
   z-index: 2;
 }
-
 
 @keyframes turn2 {
   0% {
@@ -141,7 +146,6 @@
       transform: rotateX(-90deg);
   }
 }
-
 
 @keyframes show {
   0% {
@@ -170,7 +174,7 @@
   }
 }
 
-@keyframes asd {
+@keyframes changeIndex {
   0% {
       z-index: 2;
   }

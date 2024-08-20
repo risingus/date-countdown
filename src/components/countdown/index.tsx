@@ -1,185 +1,112 @@
-'use client'
-import { useEffect, useState } from 'react'
 import './styles.scss'
 import { CardCounter } from '../card-counter'
-import { CountContextProvider, useCountContext } from '@/context/count-countext-provider'
+import { useCountContext } from '@/context/count-countext-provider'
+import { useEffect, useState } from 'react'
+import { isValid } from 'date-fns'
+
+
+function isValidDate(date: any) {
+  if (!date) false;
+  if (!isValid(new Date(date))) return false
+  return true;
+}
+
+function formatTimeLeft(timeLeft: number) {
+  const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hoursLeft = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const secondsLeft = Math.floor((timeLeft % (1000 * 60)) / 1000);
+  return {
+    days: String(daysLeft),
+    hours: String(hoursLeft).padStart(2, '0'),
+    minutes: String(minutesLeft).padStart(2, '0'),
+    seconds: String(secondsLeft).padStart(2, '0')
+  }
+}
+
+function getTimeLeft(date: Date) {
+  const nowInMili = new Date().getTime()
+  const timeLeft = new Date(date).getTime() - nowInMili
+  return timeLeft
+}
 
 export const CountDown = () => {
+  const { date } = useCountContext()
+  const [countdownTime, setCountDownTime] = useState({
+    days: '0',
+    hours: '00',
+    minutes: '00',
+    seconds: '00'
+  })
 
+  const minutes0 = Number(countdownTime.minutes[0])
+  const beforeMinutes0 = minutes0 === 0 ? 6 : (minutes0 + 1 === 7 ? 0 : minutes0 + 1);
+
+  const minutes1 = Number(countdownTime.minutes[1])
+  const beforeMinutes1 = minutes1 === 0 ? 1 : (minutes1 + 1 === 10 ? 0 : minutes1 + 1);
+
+  const seconds0 = Number(countdownTime.seconds[0])
+  const beforeSeconds0 = seconds0 === 0 ? 1 : (seconds0 + 1 === 10 ? 0 : seconds0 + 1);
+
+  const seconds1 = Number(countdownTime.seconds[1])
+  const beforeSeconds1 = seconds1 === 0 ? 1 : (seconds1 + 1 === 10 ? 0 : seconds1 + 1);
 
   useEffect(() => {
-    setInterval(() => {
-      secondPlay();
-    }, 1000);
-
-
-    function secondPlay() {
-      document.body.classList.remove("play");
-      let aa = document.querySelector("ul.secondPlay li.active");
-
-      if (!aa) {
-        aa = document.querySelector("ul.secondPlay li");
-        if (!aa) return
-        aa.classList.add("before");
-        aa.classList.remove("active");
-        let nextLi = aa.nextElementSibling || document.querySelector("ul.secondPlay li");
-        if (!nextLi) return
-
-        nextLi.classList.add("active");
-        document.body.classList.add("play");
+    let newInterval: number;
+    newInterval = window.setInterval(() => {
+      const isValid = isValidDate(date)
+      if (!date || !isValid) {
+        document.title = 'date countdown'
         return
       }
+      const timeLeft = getTimeLeft(date)
+      const timeLeftFormated = formatTimeLeft(timeLeft)
+      document.title = `${timeLeftFormated.days}d : ${timeLeftFormated.minutes}m : ${timeLeftFormated.seconds}s `
+      setCountDownTime(timeLeftFormated)
+    }, 1000)
 
-      if (aa === aa?.parentElement?.lastElementChild) {
-        document.querySelectorAll("ul.secondPlay li").forEach(li => li.classList.remove("before"));
-        aa.classList.add("before");
-        aa.classList.remove("active");
-        aa = document.querySelector("ul.secondPlay li");
-        if (!aa) return;
-        aa.classList.add("active");
-        document.body.classList.add("play");
-        return
-      }
-
-      document.querySelectorAll("ul.secondPlay li").forEach(li => li.classList.remove("before"));
-      aa.classList.add("before");
-      aa.classList.remove("active");
-      let nextLi = aa.nextElementSibling;
-      if (!nextLi) return;
-      nextLi.classList.add("active");
-      document.body.classList.add("play");
+    return () => {
+      clearInterval(newInterval)
     }
-
-  }, [])
-
-
+  }, [date])
 
   return (
     <main className="container">
-      <ul className="flip secondPlay">
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">0</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">0</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">1</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">1</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">2</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">2</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">3</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">3</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">4</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">4</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">5</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">5</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">6</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">6</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">7</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">7</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">8</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">8</div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div className="up">
-              <div className="shadow"></div>
-              <div className="inn">9</div>
-            </div>
-            <div className="down">
-              <div className="shadow"></div>
-              <div className="inn">9</div>
-            </div>
-          </a>
-        </li>
-      </ul>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+          {
+            countdownTime.days.length > 1
+              ? Array.from({ length: countdownTime.days.length }, (_, index) => countdownTime.days[index]).map((item) => {
+                const beforeDay = Number(item) === 0 ? 1 : (Number(item) + 1 === 10 ? 0 : Number(item) + 1);
+                return <CardCounter count={Number(item)} key={item} before={beforeDay} />
+              })
+              : <CardCounter count={Number(countdownTime.days)} />
+          }
+        </div>
+        <span>
+          days
+        </span>
+      </div>
 
-      <CardCounter />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+          <CardCounter count={Number(countdownTime.minutes[0])} before={beforeMinutes0} />
+          <CardCounter count={Number(countdownTime.minutes[1])} before={beforeMinutes1} />
+        </div>
+        <span>
+          minutes
+        </span>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+          <CardCounter count={Number(countdownTime.seconds[0])} before={beforeSeconds0} />
+          <CardCounter count={Number(countdownTime.seconds[1])} before={beforeSeconds1} />
+        </div>
+        <span>
+          seconds
+        </span>
+      </div>
     </main>
 
   )

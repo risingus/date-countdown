@@ -1,14 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useCallback } from 'react';
 
 interface CountContextType {
-  count: number
-  handleChangeCount: () => null
+  date?: Date
 }
 
 const countContext = createContext({} as CountContextType);
 
 const initialState = {
-  count: 0,
+  date: null
 };
 
 const reducer = (state: any, action: any) => {
@@ -25,30 +24,23 @@ const reducer = (state: any, action: any) => {
 };
 
 export const CountContextProvider = ({ children }: any) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState, (initialState) => {
+    return {
+      ...initialState,
+      date: new Date(2024, 10, 10, 10, 10, 10)
+    }
+  });
 
-  const handleChangeCount = useCallback(() => {
-    return changeCount()
-  }, [])
 
   function changeCount() {
     dispatch({ type: 'changeCount' });
   }
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     // if (refCount.current === count) return
-  //     handleChangeCount()
-  //   }, 1000);
-  // }, [handleChangeCount])
-
-
   const countProps = useMemo(
     () => ({
       ...state,
-      handleChangeCount
     }),
-    [state, handleChangeCount]
+    [state]
   );
 
   return (
