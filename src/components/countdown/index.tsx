@@ -4,7 +4,6 @@ import { useCountContext } from '@/context/count-countext-provider'
 import { useEffect, useState } from 'react'
 import { isValid } from 'date-fns'
 
-
 function isValidDate(date: any) {
   if (!date) false;
   if (!isValid(new Date(date))) return false
@@ -39,6 +38,12 @@ export const CountDown = () => {
     seconds: '00'
   })
 
+  const hours0 = Number(countdownTime.hours[0])
+  const beforeHours0 = hours0 === 0 ? 1 : (hours0 + 1 === 10 ? 0 : hours0 + 1);
+
+  const hours1 = Number(countdownTime.hours[1])
+  const beforeHours1 = hours1 === 0 ? 1 : (hours1 + 1 === 10 ? 0 : hours1 + 1);
+
   const minutes0 = Number(countdownTime.minutes[0])
   const beforeMinutes0 = minutes0 === 0 ? 6 : (minutes0 + 1 === 7 ? 0 : minutes0 + 1);
 
@@ -61,7 +66,7 @@ export const CountDown = () => {
       }
       const timeLeft = getTimeLeft(date)
       const timeLeftFormated = formatTimeLeft(timeLeft)
-      document.title = `${timeLeftFormated.days}d : ${timeLeftFormated.minutes}m : ${timeLeftFormated.seconds}s `
+      document.title = `${timeLeftFormated.days}d: ${timeLeftFormated.hours}h : ${timeLeftFormated.minutes}m : ${timeLeftFormated.seconds}s `
       setCountDownTime(timeLeftFormated)
     }, 1000)
 
@@ -72,8 +77,8 @@ export const CountDown = () => {
 
   return (
     <main className="container">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+      <div className='period-container'>
+        <div className='card-time-container'>
           {
             countdownTime.days.length > 1
               ? Array.from({ length: countdownTime.days.length }, (_, index) => countdownTime.days[index]).map((item) => {
@@ -83,29 +88,40 @@ export const CountDown = () => {
               : <CardCounter count={Number(countdownTime.days)} />
           }
         </div>
-        <span>
+        <strong>
           days
-        </span>
+        </strong>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
-          <CardCounter count={Number(countdownTime.minutes[0])} before={beforeMinutes0} />
+      <div className='period-container'>
+        <div className='card-time-container'>
+          <CardCounter count={Number(countdownTime.hours[0])} before={beforeHours0} />
+          <CardCounter count={Number(countdownTime.hours[1])} before={beforeHours1} />
+        </div>
+        <strong>
+          hours
+        </strong>
+      </div>
+
+
+      <div className='period-container'>
+        <div className='card-time-container'>
+          <CardCounter count={Number(countdownTime.minutes[0])} before={beforeMinutes0} maxCount={7} />
           <CardCounter count={Number(countdownTime.minutes[1])} before={beforeMinutes1} />
         </div>
-        <span>
+        <strong>
           minutes
-        </span>
+        </strong>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+      <div className='period-container'>
+        <div className='card-time-container'>
           <CardCounter count={Number(countdownTime.seconds[0])} before={beforeSeconds0} />
           <CardCounter count={Number(countdownTime.seconds[1])} before={beforeSeconds1} />
         </div>
-        <span>
+        <strong>
           seconds
-        </span>
+        </strong>
       </div>
     </main>
 

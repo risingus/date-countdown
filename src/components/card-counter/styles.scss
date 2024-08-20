@@ -6,14 +6,16 @@
   --card-folding-top: 2.75rem;
   --card-font-size: 5rem;
   --card-line-height: 5.438rem;
+  --card-border-radius: 6px;
 }
 
 .card-counter-container {
   position: relative;
   width: var(--card-width);
   height: var(--card-height);
-  border-radius: 6px;
+  border-radius: var(--card-border-radius);
   box-shadow: 0 2px 5px rgba(0, 0, 0, .7);
+  // box-shadow: 0 2px 3px rgba(237, 5, 148, 0.5);
 }
 
 .card-counter {
@@ -88,7 +90,7 @@
 .card-counter-up {
   transform-origin: 50% 100%;
   top: 0;
-
+  
   .card-counter-inn {
     top: 0;
   }
@@ -108,7 +110,6 @@
 .card-counter-down {
   transform-origin: 50% 0%;
   bottom: 0;
-
   .card-counter-inn {
     bottom: 0;
   }
@@ -124,7 +125,7 @@
   text-shadow: 0 1px 2px #000;
   text-align: center;
   background-color: #333;
-  border-radius: 6px;
+  border-radius: var(--card-border-radius);
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: bold;
   font-size: var(--card-font-size);

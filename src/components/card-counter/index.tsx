@@ -3,13 +3,14 @@ import './styles.scss'
 interface CardCounterTypes {
   count: number
   before?: number
+  maxCount?: number
 }
 
-export const CardCounter = ({ count = 0, before = 0 }: CardCounterTypes) => {
+export const CardCounter = ({ count = 0, before = 0, maxCount = 10 }: CardCounterTypes) => {
   return (
     <div className='card-counter-container'>
       {
-        Array.from({ length: 10 }, (_, index) => index)
+        Array.from({ length: maxCount }, (_, index) => index)
           .map((number) => (
             <div
               className={'card-counter'
