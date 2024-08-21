@@ -16,7 +16,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         }
       }}
     >
-      <div style={{ zIndex: 2 }}>
+      <div style={{ zIndex: 2, }}>
         {children}
       </div>
       <MouseBlob />

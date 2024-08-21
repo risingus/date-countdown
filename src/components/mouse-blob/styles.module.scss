@@ -13,7 +13,7 @@
 		scale: 1
 	}
 	to {
-		scale: 1.25;
+		scale: 1 1.25;
 	}
 }
 
@@ -21,12 +21,10 @@
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
-	overflow-y: hidden;
-	overflow-x: hidden;
 	position: absolute;
 
 	.blob {
-		height: 40vmax;
+		height: 30vmax;
 		aspect-ratio: 1;
 		position: absolute;
 		left: 50%;
@@ -34,7 +32,7 @@
 		translate: -50% -50%;
 		border-radius: 50%;
 
-		background: linear-gradient(to right, var(--primary), var(--secondary));
+		background: linear-gradient(to right, var(--primary), var(--secondary), rgba(255, 255, 255, .15));
 		animation: rotate 8s infinite, scale 8s infinite ease-in-out alternate-reverse;
 		opacity: 0.8;
 	}
@@ -44,6 +42,6 @@
 		width: 100%;
 		position: absolute;
 		z-index: 1;
-		backdrop-filter: blur(10vmax);
+		backdrop-filter: blur(13vmax);
 	}
 }
