@@ -1,9 +1,9 @@
 'use client'
-import styles from './styles.module.scss'
-import { CardCounter } from '../card-counter'
+import { CardCounter } from '@/components/card-counter'
 import { useCountdown } from '@/hooks/useCountdown'
+import styles from './styles.module.scss'
 
-export const CountDown = () => {
+const Count = () => {
   const {
     days,
     hours,
@@ -69,6 +69,7 @@ export const CountDown = () => {
         </div>
       </div>
     </div>
-
   )
 }
+
+export default Count

@@ -1,6 +1,11 @@
+import { Layout } from '@/layout'
+import { pageTitle } from '@/utils/consts'
+import { AntdRegistry } from '@ant-design/nextjs-registry'
+import './global.styles.scss'
+
 export const metadata = {
-  title: 'date countdown',
-  description: 'Generated risin-gus with ❣️',
+  title: pageTitle,
+  description: 'Created by risin-gus with ❣️',
 }
 
 export default function RootLayout({
@@ -8,9 +13,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Layout>
+          <AntdRegistry>
+            {children}
+          </AntdRegistry>
+        </Layout>
+      </body>
     </html>
   )
 }

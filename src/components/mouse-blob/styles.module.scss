@@ -26,7 +26,6 @@
 	position: absolute;
 
 	.blob {
-		background-color: white;
 		height: 40vmax;
 		aspect-ratio: 1;
 		position: absolute;
@@ -35,7 +34,7 @@
 		translate: -50% -50%;
 		border-radius: 50%;
 
-		background: linear-gradient(to right, rgb(237, 5, 148), rgb(91, 31, 209));
+		background: linear-gradient(to right, var(--primary), var(--secondary));
 		animation: rotate 8s infinite, scale 8s infinite ease-in-out alternate-reverse;
 		opacity: 0.8;
 	}
