@@ -2,6 +2,7 @@
 import { MouseBlob } from '@/components/mouse-blob'
 import { ReactNode } from 'react'
 import { ConfigProvider, theme as antTheme } from 'antd';
+import { Particlesview } from '@/components/particlesview';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -20,6 +21,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         {children}
       </div>
       <MouseBlob />
+      <Particlesview />
     </ConfigProvider>
   )
 }

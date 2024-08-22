@@ -32,7 +32,7 @@
 		translate: -50% -50%;
 		border-radius: 50%;
 
-		background: linear-gradient(to right, var(--primary), var(--secondary), rgba(255, 255, 255, .15));
+		background: linear-gradient(to right, var(--primary), var(--secondary));
 		animation: rotate 8s infinite, scale 8s infinite ease-in-out alternate-reverse;
 		opacity: 0.8;
 	}
