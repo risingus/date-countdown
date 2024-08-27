@@ -1,27 +1,29 @@
 'use client'
-import { addDays, addHours, addMinutes, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isValid } from 'date-fns';
+import { addDays, addHours, addMinutes, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, isValid, parse } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation'
-import { pageTitle } from '@/utils/consts'
 import { redirect } from 'next/navigation'
+import { pageTitle } from '@/utils/consts'
 
 
-const date = new Date(2024, 7, 28, 13, 6, 10)
-
-function isValidDate(date: any) {
-  if (!date) false;
-  if (!isValid(new Date(date))) return false
-  return true;
+function returnValidDate(date: any) {
+  if (!date) return null
+  if (!isValid(parse(date, 'dd/MM/yyyy HH:mm:ss', new Date()))) return null
+  return parse(date, 'dd/MM/yyyy HH:mm:ss', new Date())
 }
 
-function getCountDownValues(date: Date) {
-  // TODO: Adicionar redirecionamento para página inicial
-  // if (!isValidDate(date)) return
+function getCountDownValues(date: any) {
+  const validDate = returnValidDate(date)
+  if (!validDate) {
+    document.title = pageTitle
+    redirect('./')
+    return null
+  }
   const now = new Date();
-  const days = differenceInDays(date, now);
-  const hours = differenceInHours(date, addDays(now, days));
-  const minutes = differenceInMinutes(date, addDays(addHours(now, hours), days));
-  const seconds = differenceInSeconds(date, addDays(addHours(addMinutes(now, minutes), hours), days));
+  const days = differenceInDays(validDate, now);
+  const hours = differenceInHours(validDate, addDays(now, days));
+  const minutes = differenceInMinutes(validDate, addDays(addHours(now, hours), days));
+  const seconds = differenceInSeconds(validDate, addDays(addHours(addMinutes(now, minutes), hours), days));
 
   const daysString = String(days)
 
@@ -38,6 +40,8 @@ function getCountDownValues(date: Date) {
 }
 
 export const useCountdown = () => {
+  const searchParams = useSearchParams();
+  const date = searchParams.get('date')
   const [countdownTime, setCountDownTime] = useState({
     days: '000',
     hours: '00',
@@ -66,14 +70,15 @@ export const useCountdown = () => {
   useEffect(() => {
     let newInterval: number;
     newInterval = window.setInterval(() => {
-      setCountDownTime(getCountDownValues(date))
+      const formatedDate = getCountDownValues(date)
+      if (!formatedDate) return
+      setCountDownTime(formatedDate)
     }, 1000)
 
     return () => {
       clearInterval(newInterval)
     }
-  }, [])
-
+  }, [date])
 
   return {
     days: countdownTime.days,

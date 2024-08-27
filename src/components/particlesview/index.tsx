@@ -16,9 +16,9 @@ const particlesOptions: ISourceOptions = {
     modes: {
       bubble: {
         distance: 300,
-        size: 6,
+        size: 3,
         duration: 10,
-        opacity: .8,
+        opacity: .5,
         color: {
           value: 'rgb(255, 1, 158)'
         }
@@ -46,23 +46,23 @@ const particlesOptions: ISourceOptions = {
       density: {
         enable: true
       },
-      value: 200
+      value: 250
     },
     opacity: {
-      value: .1,
+      value: .5,
     },
     shape: {
       type: "circle"
     },
-    // stroke: {
-    //   color: 'rgb(77, 4, 222)',
-    //   opacity: .1,
-    //   width: 5,
-    // },
+    stroke: {
+      color: '#fffff',
+      opacity: 1,
+      width: 1,
+    },
     size: {
       value: {
-        min: 2,
-        max: 5
+        min: .25,
+        max: 1
       }
     }
   }

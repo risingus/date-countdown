@@ -1,9 +1,12 @@
 'use client'
 import { CardCounter } from '@/components/card-counter'
 import { useCountdown } from '@/hooks/useCountdown'
+import { useSearchParams } from 'next/navigation'
 import styles from './styles.module.scss'
 
 const Count = () => {
+  const searchParams = useSearchParams();
+  const message = searchParams.get('message')
   const {
     days,
     hours,
@@ -20,7 +23,7 @@ const Count = () => {
   return (
     <div className={styles['container']}>
 
-      <strong>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla, quidem!</strong>
+      <strong>{typeof message === 'string' && message.length > 0 ? message : ''}</strong>
 
       <div className={styles['countdown-container']}>
         <div className={styles['period-container']}>

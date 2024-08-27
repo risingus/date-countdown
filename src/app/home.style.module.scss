@@ -22,6 +22,40 @@
     text-overflow: ellipsis;
   }
 
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    padding: 2rem;
+    max-width: 30rem;
+
+
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      & > span {
+        color: #dc4446;
+      }
+    }
+
+
+    .form-footer {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+  }
+
   .footer {
     margin-top: auto;
     bottom: 0;
