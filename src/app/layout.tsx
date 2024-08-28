@@ -5,7 +5,7 @@ import './global.styles.scss'
 
 export const metadata = {
   title: pageTitle,
-  description: 'Created by risin-gus with ❣️',
+  description: 'Simple Countdown time by risin-gus',
 }
 
 export default function RootLayout({
