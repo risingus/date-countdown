@@ -4,8 +4,9 @@ import { useCountdown } from '@/hooks/useCountdown'
 import { useSearchParams } from 'next/navigation'
 import styles from './styles.module.scss'
 import { useRouter } from 'next/navigation'
+import { Suspense } from 'react'
 
-const Count = () => {
+const CountDown = () => {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const message = searchParams.get('message')
@@ -74,6 +75,15 @@ const Count = () => {
         </div>
       </div>
     </div>
+  )
+}
+
+
+const Count = () => {
+  return (
+    <Suspense>
+      <CountDown />
+    </Suspense>
   )
 }
 

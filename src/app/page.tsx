@@ -5,8 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod'
 import dateFnsGenerateConfig from 'rc-picker/lib/generate/dateFns';
 import { isBefore, isValid, format } from 'date-fns';
-import { useRouter, usePathname, useParams, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './home.style.module.scss'
+import { Suspense } from 'react';
 
 interface FormProps {
   message: string
@@ -32,7 +33,7 @@ const formSchema = z.object({
 
 const DatePickerDateFns = DatePicker.generatePicker<Date>(dateFnsGenerateConfig);
 
-export default function Home() {
+function HomePage() {
   const searchParams = useSearchParams()
   const isEdit = typeof searchParams.get('edit') === 'string'
   const { replace, back } = useRouter();
@@ -128,3 +129,13 @@ export default function Home() {
     </div>
   )
 }
+
+const Home = () => {
+  return (
+    <Suspense>
+      <HomePage />
+    </Suspense>
+  )
+}
+
+export default Home
