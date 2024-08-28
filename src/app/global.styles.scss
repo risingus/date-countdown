@@ -21,9 +21,18 @@ body {
   flex-direction: column;
   gap: 1rem;
 
-	h1, h2, h3, h4, h5, h6, p, strong, span {
+	h1, h2, h3, h4, h5, h6, p, strong, span, a {
 		color: var(--text-color);
 		text-shadow: var(--text-shadow);
+	}
+
+	a {
+		text-decoration-color: transparent;
+		transition: text-decoration 0.2s ease-in-out;
+	}
+
+	a:hover {
+		text-decoration-color: var(--primary);
 	}
 }
 

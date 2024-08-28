@@ -5,9 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod'
 import dateFnsGenerateConfig from 'rc-picker/lib/generate/dateFns';
 import { isBefore, isValid, format } from 'date-fns';
+import { useRouter, usePathname, useParams, useSearchParams } from 'next/navigation';
 import styles from './home.style.module.scss'
-import { useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
 
 interface FormProps {
   message: string
@@ -34,7 +33,9 @@ const formSchema = z.object({
 const DatePickerDateFns = DatePicker.generatePicker<Date>(dateFnsGenerateConfig);
 
 export default function Home() {
-  const { replace } = useRouter();
+  const searchParams = useSearchParams()
+  const isEdit = typeof searchParams.get('edit') === 'string'
+  const { replace, back } = useRouter();
   const { handleSubmit, control, formState } = useForm<FormProps>({ resolver: zodResolver(formSchema), defaultValues: { message: '', date: null } })
   const { errors } = formState
 
@@ -46,14 +47,13 @@ export default function Home() {
     replace(`/count?${params.toString()}`)
   }
 
-
   return (
     <div className={styles['home-container']}>
 
       <h1>date countdown</h1>
 
       <form noValidate onSubmit={handleSubmit(submit)} className={styles['form']}>
-
+        <p>Select the date and inform the message to show on countdown </p>
         <Controller
           control={control}
           name='message'
@@ -67,6 +67,7 @@ export default function Home() {
                 onBlur={onBlur}
                 ref={ref}
                 variant='filled'
+                autoFocus
                 status={
                   !!errors?.message?.message ? 'error' : ''
                 }
@@ -83,8 +84,6 @@ export default function Home() {
           )}
         />
 
-
-
         <Controller
           control={control}
           name='date'
@@ -99,7 +98,6 @@ export default function Home() {
                 format='dd/MM/yyyy - HH:mm:ss'
                 value={value}
                 placeholder='Select date and time'
-                autoFocus
                 onChange={(value) => onChange(value)}
                 onOk={(value) => onChange(value)}
                 status={
@@ -118,21 +116,15 @@ export default function Home() {
           )}
         />
 
-
-
-
-
         <div className={styles['form-footer']}>
-          <Button type='text'>Cancel</Button>
+          {
+            isEdit
+              ? <Button type='text' onClick={back}>Cancel</Button>
+              : null
+          } 
           <Button type='primary' htmlType='submit'>Confirm</Button>
         </div>
       </form>
-
-
-
-      <footer className={styles['footer']}>
-        <span>Coded with ❣️ by risin-gus</span>
-      </footer>
     </div>
   )
 }

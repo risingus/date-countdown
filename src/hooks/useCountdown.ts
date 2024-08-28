@@ -17,7 +17,12 @@ function getCountDownValues(date: any) {
   if (!validDate) {
     document.title = pageTitle
     redirect('./')
-    return null
+    return {
+      days: '000',
+      hours: '00',
+      minutes: '00',
+      seconds: '00'
+    }
   }
   const now = new Date();
   const days = differenceInDays(validDate, now);
@@ -70,11 +75,8 @@ export const useCountdown = () => {
   useEffect(() => {
     let newInterval: number;
     newInterval = window.setInterval(() => {
-      const formatedDate = getCountDownValues(date)
-      if (!formatedDate) return
-      setCountDownTime(formatedDate)
+      setCountDownTime(getCountDownValues(date))
     }, 1000)
-
     return () => {
       clearInterval(newInterval)
     }

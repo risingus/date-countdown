@@ -3,8 +3,10 @@ import { CardCounter } from '@/components/card-counter'
 import { useCountdown } from '@/hooks/useCountdown'
 import { useSearchParams } from 'next/navigation'
 import styles from './styles.module.scss'
+import { useRouter } from 'next/navigation'
 
 const Count = () => {
+  const { push } = useRouter();
   const searchParams = useSearchParams();
   const message = searchParams.get('message')
   const {
@@ -25,7 +27,7 @@ const Count = () => {
 
       <strong>{typeof message === 'string' && message.length > 0 ? message : ''}</strong>
 
-      <div className={styles['countdown-container']}>
+      <div className={styles['countdown-container']} onClick={() => push('/?edit')}>
         <div className={styles['period-container']}>
           <div className={styles['card-time-container']}>
             {

@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadFull } from "tsparticles";
+import Particles, { initParticlesEngine } from '@tsparticles/react';
+import { loadFull } from 'tsparticles';
 import { ISourceOptions } from '@tsparticles/engine';
 
 const particlesOptions: ISourceOptions = {
@@ -10,13 +10,13 @@ const particlesOptions: ISourceOptions = {
     events: {
       onHover: {
         enable: true,
-        mode: "bubble"
+        mode: 'bubble'
       },
     },
     modes: {
       bubble: {
         distance: 300,
-        size: 3,
+        size: 2,
         duration: 10,
         opacity: .5,
         color: {
@@ -29,34 +29,35 @@ const particlesOptions: ISourceOptions = {
   particles: {
     fill: true,
     color: {
-      value: "#ffffff",
+      value: '#ffffff',
     },
     collisions: {
       enable: true
     },
     move: {
-      direction: "none",
+      direction: 'none',
+      warp: true,
       enable: true,
-      speed: 3,
+      speed: .5,
       outModes: {
-        default: "bounce"
+        default: 'split',
       },
     },
     number: {
       density: {
-        enable: true
+        enable: true,
       },
-      value: 250
+      value: 100,
     },
     opacity: {
-      value: .5,
+      value: 0.25,
     },
     shape: {
-      type: "circle"
+      type: 'circle',
     },
     stroke: {
       color: '#fffff',
-      opacity: 1,
+      opacity: 0.8,
       width: 1,
     },
     size: {
@@ -65,7 +66,7 @@ const particlesOptions: ISourceOptions = {
         max: 1
       }
     }
-  }
+  },
 };
 
 export const Particlesview = () => {
