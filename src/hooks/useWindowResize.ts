@@ -3,19 +3,19 @@ import { useState, useLayoutEffect } from 'react';
 
 export function useWindowResize() {
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0
   });
-  const handleSize = () => {
+  const handleSize = (event: UIEvent) => {
+    const target = event.target as Window;
     setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: target.innerWidth,
+      height: target.innerHeight,
     });
   };
 
   useLayoutEffect(() => {
     window.addEventListener('resize', handleSize);
-
     return () => {
       window.removeEventListener('resize', handleSize);
     };
