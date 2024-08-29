@@ -1,13 +1,14 @@
 'use client'
-import { Button, DatePicker, Input } from 'antd';
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod'
-import dateFnsGenerateConfig from 'rc-picker/lib/generate/dateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import { isBefore, isValid, format } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect } from 'react';
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { TextField, Button } from '@mui/material';
 import styles from './home.style.module.scss'
-import { Suspense } from 'react';
 
 interface FormProps {
   message: string
@@ -31,13 +32,11 @@ const formSchema = z.object({
     }, { message: 'Must be in future' })
 })
 
-const DatePickerDateFns = DatePicker.generatePicker<Date>(dateFnsGenerateConfig);
-
 function HomePage() {
   const searchParams = useSearchParams()
   const isEdit = typeof searchParams.get('edit') === 'string'
   const { replace, back } = useRouter();
-  const { handleSubmit, control, formState } = useForm<FormProps>({ resolver: zodResolver(formSchema), defaultValues: { message: '', date: null } })
+  const { handleSubmit, control, formState, setFocus } = useForm<FormProps>({ resolver: zodResolver(formSchema), defaultValues: { message: '', date: null } })
   const { errors } = formState
 
   function submit({ message, date }: FormProps) {
@@ -47,6 +46,13 @@ function HomePage() {
     params.set('message', message)
     replace(`/count?${params.toString()}`)
   }
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus('message')
+    }, 120);
+  }, [setFocus])
 
   return (
     <div className={styles['home-container']}>
@@ -60,18 +66,16 @@ function HomePage() {
           name='message'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <div className={styles['input-container']}>
-              <Input
-                placeholder='Message'
-                size='large'
+              <TextField
+                label='Message'
+                inputRef={ref}
+                size='small'
+                variant='outlined'
                 onChange={onChange}
                 value={value}
                 onBlur={onBlur}
-                ref={ref}
-                variant='filled'
-                autoFocus
-                status={
-                  !!errors?.message?.message ? 'error' : ''
-                }
+                error={typeof errors?.message?.message === 'string'
+                  && errors.message.message.length > 0}
               />
               <span>
                 {
@@ -88,23 +92,26 @@ function HomePage() {
         <Controller
           control={control}
           name='date'
-          render={({ field: { onChange, onBlur, value, ref } }) => (
+          render={({ field: { onChange, value, ref } }) => (
             <div className={styles['input-container']}>
-              <DatePickerDateFns
-                showTime
-                onBlur={onBlur}
-                ref={ref}
-                size='large'
-                variant='filled'
-                format='dd/MM/yyyy - HH:mm:ss'
-                value={value}
-                placeholder='Select date and time'
-                onChange={(value) => onChange(value)}
-                onOk={(value) => onChange(value)}
-                status={
-                  !!errors?.date?.message ? 'error' : ''
-                }
-              />
+
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  ampm={false}
+                  ampmInClock={false}
+                  ref={ref}
+                  value={value}
+                  onChange={(value) => onChange(value)}
+                  format='dd/MM/yyyy - HH:mm:ss'
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      error: typeof errors?.date?.message === 'string'
+                        && errors.date.message.length > 0,
+                    }
+                  }}
+                />
+              </LocalizationProvider>
               <span>
                 {
                   typeof errors?.date?.message === 'string'
@@ -120,10 +127,10 @@ function HomePage() {
         <div className={styles['form-footer']}>
           {
             isEdit
-              ? <Button type='text' onClick={back}>Cancel</Button>
+              ? <Button variant='text' size='small' sx={{ color: 'white' }} onClick={back}>Cancel</Button>
               : null
           } 
-          <Button type='primary' htmlType='submit'>Confirm</Button>
+          <Button variant='contained' size='small' type='submit'>Confirm</Button>
         </div>
       </form>
     </div>

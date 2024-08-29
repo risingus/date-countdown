@@ -1,10 +1,10 @@
 'use client'
+import { Suspense } from 'react'
 import { CardCounter } from '@/components/card-counter'
 import { useCountdown } from '@/hooks/useCountdown'
 import { useSearchParams } from 'next/navigation'
-import styles from './styles.module.scss'
 import { useRouter } from 'next/navigation'
-import { Suspense } from 'react'
+import styles from './styles.module.scss'
 
 const CountDown = () => {
   const { push } = useRouter();

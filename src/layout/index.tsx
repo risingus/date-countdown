@@ -1,31 +1,23 @@
 'use client'
 import { MouseBlob } from '@/components/mouse-blob'
 import { ReactNode } from 'react'
-import { ConfigProvider, theme as antTheme } from 'antd';
+import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { Particlesview } from '@/components/particlesview';
 import styles from './styles.module.scss'
 import Link from 'next/link';
 
-// & > footer {
-//   margin-top: auto;
-//   bottom: 0;
-//   position: absolute;
-//   padding-bottom: 1rem;
-// }
+const materialDarkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: 'rgb(255, 1, 158)',
+    },
+  },
+});
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: antTheme.darkAlgorithm,
-        cssVar: true,
-        token: {
-          colorPrimary: 'rgb(255, 1, 158)',
-          colorLink: 'rgb(255, 1, 158)',
-          colorTextPlaceholder: 'white',
-        }
-      }}
-    >
+    <MuiThemeProvider theme={materialDarkTheme}>
       <div style={{ zIndex: 2 }}>
         {children}
       </div>
@@ -34,6 +26,6 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       </footer>
       <MouseBlob />
       <Particlesview />
-    </ConfigProvider>
+    </MuiThemeProvider>
   )
 }

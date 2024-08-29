@@ -8,4 +8,8 @@
   position: absolute;
   padding-bottom: 1rem;
   z-index: 2;
+
+  @media (height < 665px) {
+    display: none;
+  }
 }

@@ -1,6 +1,5 @@
 import { Layout } from '@/layout'
 import { pageTitle } from '@/utils/consts'
-import { AntdRegistry } from '@ant-design/nextjs-registry'
 import './global.styles.scss'
 
 export const metadata = {
@@ -17,9 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Layout>
-          <AntdRegistry>
-            {children}
-          </AntdRegistry>
+          {children}
         </Layout>
       </body>
     </html>
