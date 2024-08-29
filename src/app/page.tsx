@@ -6,9 +6,10 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import { isBefore, isValid, format } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect } from 'react';
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DateTimePicker, LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers';
 import { TextField, Button } from '@mui/material';
 import styles from './home.style.module.scss'
+import { useWindowResize } from '@/hooks/useWindowResize';
 
 interface FormProps {
   message: string
@@ -33,6 +34,7 @@ const formSchema = z.object({
 })
 
 function HomePage() {
+  const { width, height } = useWindowResize()
   const searchParams = useSearchParams()
   const isEdit = typeof searchParams.get('edit') === 'string'
   const { replace, back } = useRouter();
@@ -94,23 +96,46 @@ function HomePage() {
           name='date'
           render={({ field: { onChange, value, ref } }) => (
             <div className={styles['input-container']}>
-
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                  ampm={false}
-                  ampmInClock={false}
-                  ref={ref}
-                  value={value}
-                  onChange={(value) => onChange(value)}
-                  format='dd/MM/yyyy - HH:mm:ss'
-                  slotProps={{
-                    textField: {
-                      size: 'small',
-                      error: typeof errors?.date?.message === 'string'
-                        && errors.date.message.length > 0,
-                    }
-                  }}
-                />
+                {
+                  height < 800 || width < 500
+                    ? (
+                      <MobileDateTimePicker
+                        ampm={false}
+                        ampmInClock={false}
+                        ref={ref}
+                        value={value}
+                        onChange={(value) => onChange(value)}
+                        format='dd/MM/yyyy - HH:mm:ss'
+                        slotProps={{
+                          textField: {
+                            size: 'small',
+                            error: typeof errors?.date?.message === 'string'
+                              && errors.date.message.length > 0,
+                          }
+                        }}
+
+                      />
+                    )
+                    : (
+                      <DateTimePicker
+                        ampm={false}
+                        ampmInClock={false}
+                        ref={ref}
+                        value={value}
+                        onChange={(value) => onChange(value)}
+                        format='dd/MM/yyyy - HH:mm:ss'
+                        slotProps={{
+                          textField: {
+                            size: 'small',
+                            error: typeof errors?.date?.message === 'string'
+                              && errors.date.message.length > 0,
+                          }
+                        }}
+                      />
+                    )
+                }
+
               </LocalizationProvider>
               <span>
                 {
@@ -129,7 +154,7 @@ function HomePage() {
             isEdit
               ? <Button variant='text' size='small' sx={{ color: 'white' }} onClick={back}>Cancel</Button>
               : null
-          } 
+          }
           <Button variant='contained' size='small' type='submit'>Confirm</Button>
         </div>
       </form>
