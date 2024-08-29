@@ -22,7 +22,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         {children}
       </div>
       <footer className={styles['footer']}>
-        <Link href='https://www.google.com' target='blank'>Coded with ❤️ by Gus</Link>
+        <Link href='https://www.linkedin.com/in/gustavo-lima-gonçalves-de-oliveira-44b425b1' target='blank'>Coded with ❤️ by Gus</Link>
       </footer>
       <MouseBlob />
       <Particlesview />
