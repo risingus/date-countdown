@@ -1,51 +1,41 @@
 'use client'
+import { Suspense, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
-import { isBefore, isValid, format } from 'date-fns';
+import { isBefore, isValid, format, parse } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
-import { DateTimePicker, LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers';
 import { TextField, Button } from '@mui/material';
 import styles from './home.style.module.scss'
-import { useWindowResize } from '@/hooks/useWindowResize';
-
-interface FormProps {
-  message: string
-  date: Date | null
-}
 
 const formSchema = z.object({
   message: z.string({ invalid_type_error: 'Invalid message' }).trim().optional(),
-  date: z.date({ invalid_type_error: 'Invalid date', required_error: 'Date is required' })
-    .nullable()
-    .refine((value) => {
-      return !!value
-    }, { message: 'Date is required' })
+  date: z.string({ invalid_type_error: 'Invalid date', required_error: 'Date is required' })
+  // .datetime({local: locale})
     .refine((value) => {
       if (!value) return true;
-      return isValid(new Date(value)) === true
+      return isValid(parse(value, 'yyyy-MM-dd\'T\'HH:mm', new Date())) === true
     }, { message: 'Invalid date' })
     .refine((value) => {
       if (!value) return true
-      return !isBefore(new Date(value), new Date())
-    }, { message: 'Must be in future' })
+      return !isBefore(parse(value, 'yyyy-MM-dd\'T\'HH:mm', new Date()), new Date())
+    }, { message: 'Must be in future' }),
 })
 
+type FormProps = z.infer<typeof formSchema>
+
 function HomePage() {
-  const { width, height } = useWindowResize()
   const searchParams = useSearchParams()
   const isEdit = typeof searchParams.get('edit') === 'string'
   const { replace, back } = useRouter();
-  const { handleSubmit, control, formState, setFocus } = useForm<FormProps>({ resolver: zodResolver(formSchema), defaultValues: { message: '', date: null } })
+  const { handleSubmit, control, formState, setFocus } = useForm<FormProps>({ resolver: zodResolver(formSchema), defaultValues: { message: '', date: '', } })
   const { errors } = formState
 
   function submit({ message, date }: FormProps) {
     if (!date) return;
     const params = new URLSearchParams();
-    params.set('date', format(new Date(date), 'dd/MM/yyyy HH:mm:ss'))
-    params.set('message', message)
+    params.set('date', format(parse(date, 'yyyy-MM-dd\'T\'HH:mm', new Date()), 'dd/MM/yyyy HH:mm:ss'))
+    params.set('message', message ?? '')
     replace(`/count?${params.toString()}`)
   }
 
@@ -96,47 +86,9 @@ function HomePage() {
           name='date'
           render={({ field: { onChange, value, ref } }) => (
             <div className={styles['input-container']}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                {
-                  height < 800 || width < 500
-                    ? (
-                      <MobileDateTimePicker
-                        ampm={false}
-                        ampmInClock={false}
-                        ref={ref}
-                        value={value}
-                        onChange={(value) => onChange(value)}
-                        format='dd/MM/yyyy - HH:mm:ss'
-                        slotProps={{
-                          textField: {
-                            size: 'small',
-                            error: typeof errors?.date?.message === 'string'
-                              && errors.date.message.length > 0,
-                          }
-                        }}
 
-                      />
-                    )
-                    : (
-                      <DateTimePicker
-                        ampm={false}
-                        ampmInClock={false}
-                        ref={ref}
-                        value={value}
-                        onChange={(value) => onChange(value)}
-                        format='dd/MM/yyyy - HH:mm:ss'
-                        slotProps={{
-                          textField: {
-                            size: 'small',
-                            error: typeof errors?.date?.message === 'string'
-                              && errors.date.message.length > 0,
-                          }
-                        }}
-                      />
-                    )
-                }
+              <input value={value} onChange={onChange} type='datetime-local' ref={ref} />
 
-              </LocalizationProvider>
               <span>
                 {
                   typeof errors?.date?.message === 'string'
