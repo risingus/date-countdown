@@ -5,13 +5,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod'
 import { isBefore, isValid, format, parse } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TextField, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import styles from './home.style.module.scss'
+import { Input } from '@/components/input/input';
 
 const formSchema = z.object({
   message: z.string({ invalid_type_error: 'Invalid message' }).trim().optional(),
   date: z.string({ invalid_type_error: 'Invalid date', required_error: 'Date is required' })
-  // .datetime({local: locale})
+    // .datetime()
     .refine((value) => {
       if (!value) return true;
       return isValid(parse(value, 'yyyy-MM-dd\'T\'HH:mm', new Date())) === true
@@ -58,25 +59,15 @@ function HomePage() {
           name='message'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <div className={styles['input-container']}>
-              <TextField
-                label='Message'
-                inputRef={ref}
-                size='small'
-                variant='outlined'
-                onChange={onChange}
+              <Input
                 value={value}
+                onChange={onChange} 
+                placeholder='Message'
                 onBlur={onBlur}
-                error={typeof errors?.message?.message === 'string'
-                  && errors.message.message.length > 0}
+                ref={ref}
+                hasError={!!errors?.message?.message}
+                helperText={errors?.message?.message}
               />
-              <span>
-                {
-                  typeof errors?.message?.message === 'string'
-                    && errors.message.message.length > 0
-                    ? errors.message.message
-                    : ''
-                }
-              </span>
             </div>
           )}
         />
@@ -84,19 +75,18 @@ function HomePage() {
         <Controller
           control={control}
           name='date'
-          render={({ field: { onChange, value, ref } }) => (
+          render={({ field: { onChange, value, ref, onBlur } }) => (
             <div className={styles['input-container']}>
-
-              <input value={value} onChange={onChange} type='datetime-local' ref={ref} />
-
-              <span>
-                {
-                  typeof errors?.date?.message === 'string'
-                    && errors.date.message.length > 0
-                    ? errors.date.message
-                    : ''
-                }
-              </span>
+              <Input
+                value={value}
+                onChange={onChange}
+                placeholder='Data'
+                onBlur={onBlur}
+                type='datetime-local'
+                ref={ref}
+                hasError={!!errors?.date?.message}
+                helperText={errors?.date?.message}
+              />
             </div>
           )}
         />

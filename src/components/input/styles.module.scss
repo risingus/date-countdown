@@ -1,0 +1,33 @@
+
+
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-width: 1px;
+  
+
+
+  .label {
+    color: var(--text-color);
+  }
+}
+
+.input {
+
+  box-shadow: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+
+
+  background-color: transparent;
+  color: var(--text-color);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--text-color);
+  padding: .5rem;
+  border-radius: 4px;
+}
