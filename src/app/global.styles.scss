@@ -34,6 +34,16 @@ body {
 	a:hover {
 		text-decoration-color: var(--primary);
 	}
+
+	::-moz-selection {
+		color: var(--text-color);
+		background:  var(--primary);
+	}
+
+	::selection {
+		color: var(--text-color);
+		background:  var(--primary);
+	}
 }
 
 @keyframes gradient {

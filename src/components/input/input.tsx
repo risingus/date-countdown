@@ -23,7 +23,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ hasError, helpe
       </span>
     </div>
   )
-
 })
 
 Input.displayName = 'Input'

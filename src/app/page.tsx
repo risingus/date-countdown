@@ -12,7 +12,6 @@ import { Input } from '@/components/input/input';
 const formSchema = z.object({
   message: z.string({ invalid_type_error: 'Invalid message' }).trim().optional(),
   date: z.string({ invalid_type_error: 'Invalid date', required_error: 'Date is required' })
-    // .datetime()
     .refine((value) => {
       if (!value) return true;
       return isValid(parse(value, 'yyyy-MM-dd\'T\'HH:mm', new Date())) === true
@@ -39,7 +38,6 @@ function HomePage() {
     params.set('message', message ?? '')
     replace(`/count?${params.toString()}`)
   }
-
 
   useEffect(() => {
     setTimeout(() => {
@@ -80,7 +78,7 @@ function HomePage() {
               <Input
                 value={value}
                 onChange={onChange}
-                placeholder='Data'
+                placeholder='Date'
                 onBlur={onBlur}
                 type='datetime-local'
                 ref={ref}
