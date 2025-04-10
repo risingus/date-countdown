@@ -5,9 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod'
 import { isBefore, isValid, format, parse } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Button } from '@mui/material';
 import styles from './home.style.module.scss'
 import { Input } from '@/components/input/input';
+import Button from '@/components/button';
 
 const formSchema = z.object({
   message: z.string({ invalid_type_error: 'Invalid message' }).trim().optional(),
@@ -92,10 +92,10 @@ function HomePage() {
         <div className={styles['form-footer']}>
           {
             isEdit
-              ? <Button variant='text' size='small' sx={{ color: 'white' }} onClick={back}>Cancel</Button>
+              ? <Button type='button' secondary onClick={back}>Cancel</Button>
               : null
           }
-          <Button variant='contained' size='small' type='submit'>Confirm</Button>
+          <Button type='submit'>Confirm</Button>
         </div>
       </form>
     </div>

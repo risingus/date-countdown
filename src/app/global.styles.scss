@@ -3,6 +3,7 @@
 	--text-color: white;
 	--primary: rgb(255, 1, 158);
 	--secondary: rgb(77, 4, 222);
+	--primary-hover: rgba(255, 1, 158, 0.15);
 }
 
 * {
@@ -33,6 +34,8 @@ body {
 
 	a:hover {
 		text-decoration-color: var(--primary);
+		text-underline-offset: 0.30rem;
+		text-decoration-thickness: 2px;
 	}
 
 	::-moz-selection {

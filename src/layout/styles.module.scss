@@ -9,7 +9,9 @@
   padding-bottom: 1rem;
   z-index: 2;
 
-  @media (height < 665px) {
-    display: none;
+  a {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
   }
 }
