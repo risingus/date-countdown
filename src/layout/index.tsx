@@ -1,7 +1,6 @@
 'use client'
 import { MouseBlob } from '@/components/mouse-blob'
 import { ReactNode } from 'react'
-import { Particlesview } from '@/components/particlesview';
 import styles from './styles.module.scss'
 import Link from 'next/link';
 
@@ -21,7 +20,6 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         </Link>
       </footer>
       <MouseBlob />
-      <Particlesview />
     </>
   )
 }
